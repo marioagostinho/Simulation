@@ -1,0 +1,38 @@
+<div class="row card-container" *ngIf="assets.length > 0">
+    <div class="col-4" *ngFor="let asset of assets">
+        <div class="card">
+            <div class="card-header">
+                {{ asset.asset_class }}
+            </div>
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-5">
+                        Initial Allocation:
+                    </div>
+                    <div class="col-7">
+                        <input type="number" class="form-control" [(ngModel)]="asset.initial_allocation">
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-5">
+                        Management Fee:
+                    </div>
+                    <div class="col-7">
+                        <input type="number" class="form-control" [(ngModel)]="asset.asset_mgmt_fee" disabled>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-5">
+                        Load Fee:
+                    </div>
+                    <div class="col-7">
+                        <input type="number" class="form-control" [(ngModel)]="asset.initial_load_fee" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="assets.length === 0">
+    empty assets
+</div>

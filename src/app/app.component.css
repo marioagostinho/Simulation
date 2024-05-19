@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    flex-flow: column;
+    height: 100vh;
+    flex: 1 1 auto;
+}
+
+.container-header {
+    height: 100px;
+    margin-right: calc(-.5 * var(--bs-gutter-x));
+    margin-left: calc(-.5 * var(--bs-gutter-x));
+}
+
+.container-body {
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    margin-right: calc(-.5 * var(--bs-gutter-x));
+    margin-left: calc(-.5 * var(--bs-gutter-x));
+}
+
+.container-footer {
+    height: 150px;
+    margin-right: calc(-.5 * var(--bs-gutter-x));
+    margin-left: calc(-.5 * var(--bs-gutter-x));
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}

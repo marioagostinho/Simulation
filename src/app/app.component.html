@@ -1,0 +1,46 @@
+<!-- Main -->
+<div class="container">
+    <div class="container-header row align-items-center">
+        <div class="col-auto">
+            <label for="options" class="col-form-label"><b>Scenario Spaces:</b></label>
+        </div>
+        <div class="col-auto">
+            <select id="options" class="form-control" (change)="loadScenarioSpaceSummary()"
+                [(ngModel)]="selectedOption">
+                <option *ngFor="let option of options" [value]="option.value">
+                    {{ option.display }}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="container-body">
+        <app-asset-class [assets]="assets" [hidden]="isLoading"></app-asset-class>
+        <div class="d-flex justify-content-center" style="width: 100%; align-items: center;" *ngIf="isLoading">
+            <div class="spinner-border" role="status" style="align-items: center;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+    <div class="container-footer">
+        <button type="button" class="btn btn-primary" (click)="loadSimulations()"
+            [hidden]="isLoading || assets.length == 0" [disabled]="isSimulationLoading">
+            <span class="spinner-border spinner-border-sm" aria-hidden="true" [hidden]="!isSimulationLoading"></span>
+            <span role="status"> Simulate</span>
+        </button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div #chartModal class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Total percentile chart</h1>
+                <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+            </div>
+            <div class="modal-body">
+                <app-total-chart #totalChart></app-total-chart>
+            </div>
+        </div>
+    </div>
+</div>
