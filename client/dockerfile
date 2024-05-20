@@ -7,6 +7,7 @@ COPY . .
 RUN npm run build --configuration=production
 RUN ls -la /app/dist/simulation/browser
 
+# Stage 2: Serve the application with Nginx
 FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build /app/dist/simulation/browser /usr/share/nginx/html

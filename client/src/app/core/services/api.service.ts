@@ -1,27 +1,23 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
-import { SimulationsRequest } from '../models/simulatonsRequest';
+import { Asset } from '../models/asset';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'https://stage.3rd-eyes.com/api/public/v1';
-  private apiKey = 'A6CAFBD3-448F-4599-BD23-7C96B61E194F';
+  private baseUrl = 'http://localhost:5000/api/v1/';
 
   constructor(private http: HttpClient) { }
 
   // Contact with summary endpoint
   getSummary(scenarioSpace: string): Observable<any> {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'X-API-Key': `${this.apiKey}`
+      'Content-Type': 'application/json'
     });
 
-    const params = new HttpParams().set('scenarioSpace', scenarioSpace);
-
-    return this.http.get(`${this.apiUrl}/scenarioSpaceSummary`, { headers: headers, params: params })
+    return this.http.get(`${this.baseUrl}Summary/GetSummariesByScenarioSpace/${scenarioSpace}`, { headers: headers })
       .pipe(
         catchError(error => {
           console.error('Error fetching scenario space summary:', error);
@@ -31,19 +27,19 @@ export class ApiService {
   }
 
   // Contact with simulations endpoint
-  getSimulations(simulations: SimulationsRequest, scenarioSpace: string): Observable<any> {
+  getSimulations(assets: Asset[], scenarioSpace: string): Observable<any> {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'X-API-Key': `${this.apiKey}`
+      'Content-Type': 'application/json'
     });
 
-    const params = new HttpParams().set('scenarioSpace', scenarioSpace);
-
     const body = {
-      ...simulations
+      "assets": assets,
+      "scenarioSpace": scenarioSpace
     };
 
-    return this.http.post(`${this.apiUrl}/simulations`, body, { headers: headers, params: params })
+    console.log(body);
+
+    return this.http.post(`${this.baseUrl}Simulation/GetSimulations`, body, { headers: headers })
       .pipe(
         catchError(error => {
           console.error('Error fetching simulations:', error);

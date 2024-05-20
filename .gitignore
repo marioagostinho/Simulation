@@ -38,3 +38,156 @@ client/typings
 # System files
 .DS_Store
 Thumbs.db
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific files (Mono Auto Generated)
+mono_crash.*
+
+# User-specific files (VS Code)
+.vscode/
+
+# Include .NET SDK specific .NET Core
+.global.json
+**/project.lock.json
+**/project.fragment.lock.json
+
+# OS generated files
+[Dd]esktop.ini
+[Tt]humbs.db
+*.DS_Store
+
+# Chroot-specific files
+.devcontainer
+.vagrant
+*.vagrant
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Visual Studio 2019
+/Simulation/.vs/
+*.vc.db
+*.vc.opendb
+
+# Visual Studio for Mac
+.idea/
+.idea/.name
+.idea/.nbattrs
+.idea/desktop.xml
+.idea/misc.xml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/fileColors.xml
+.idea/php.xml
+.idea/jsLibraryMappings.xml
+.idea/libraries
+.idea/coverage
+.idea/haxe.xml
+.idea/markdown.xml
+.idea/mavenRepositories.xml
+.idea/gradle.xml
+.idea/dataSources.local.xml
+.idea/dataSources.xml
+.idea/dataSources.defaults.xml
+.idea/sshConfigs.xml
+.idea/webServers.xml
+.idea/dynamic.xml
+.idea/httpRequests.xml
+.idea/xpath.xml
+
+# Rider
+.idea/
+*.sln.iml
+.idea/.idea
+.idea/.idea/
+.idea/workspace.xml
+.idea/.name
+.idea/dotSettings.xml
+
+# Mono auto generated files
+mono_crash.*
+
+# Xamarin
+# If using Xcode, customize this so the Simulator doesn't create extra files in your source directories
+.DS_Store
+*.app
+*.app.dSYM
+*.ipa
+
+# Application Insights (Visual Studio)
+Simulation/ApplicationInsights.config
+Simulation/ApplicationInsights*config
+
+# dnx (DotNetCore) Projects
+Simulation/project.lock.json
+Simulation/project.fragment.lock.json
+Simulation/artifacts/
+Simulation/project.json
+
+# ASP.NET Scaffolding
+Simulation/ScaffoldingReadMe.txt
+
+# ASP.NET precompilation
+Simulation/*.compiled
+
+# Publish Web Output
+Simulation/*.Publish.xml
+Simulation/*.pubxml
+Simulation/*.publishproj
+
+# Ignore files related to Azure Functions
+Simulation/local.settings.json
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Windows installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Microsoft application lifecycle management
+.azuredevops/
+.azuredevops/pipelines
+.azuredevops/pipelines/
+.azuredevops/pipelines/*.yml
+.azuredevops/pipelines/*.yaml
+
+# Node.js dependencies
+Simulation/Simulation.Angular/node_modules/
+
+# Angular build files
+Simulation/Simulation.Angular/dist/
+Simulation/Simulation.Angular/out-tsc/
+
+# Yarn
+Simulation/.yarn/*
+!Simulation/.yarn/cache
+!Simulation/.yarn/unplugged
+!Simulation/.yarn/build-state.yml
+!Simulation/.yarn/install-state.gz
+
+# Docker files
+docker-compose.dcproj
+docker-compose.override.yml
+Dockerfile
+
+# Build directories
+Simulation/**/bin/
+Simulation/**/obj/

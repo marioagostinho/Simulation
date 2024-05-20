@@ -1,0 +1,19 @@
+services:
+  simulation.api:
+    image: ${DOCKER_REGISTRY-}simulation.api
+    build:
+      context: .
+      dockerfile: Simulation/Simulation.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:5000
+    ports:
+      - "5000:80"
+
+  angular-app:
+    image: ${DOCKER_REGISTRY-}angular-app
+    build:
+      context: ./client
+      dockerfile: dockerfile
+    ports:
+      - "4200:80"

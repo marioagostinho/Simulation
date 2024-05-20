@@ -3,10 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AssetClassComponent } from './asset-class/asset-class.component';
 import { ApiService } from './core/services/api.service';
-import { Portfolio } from './core/models/portfolio';
 import { TotalChartComponent } from "./total-chart/total-chart.component";
 import { Modal } from 'bootstrap';
-import { SimulationsRequest } from './core/models/simulatonsRequest';
 import { Asset } from './core/models/asset';
 
 @Component({
@@ -51,7 +49,8 @@ export class AppComponent implements AfterViewInit {
     this.isLoading = true;
     this.apiService.getSummary(this.selectedOption).subscribe({
       next: (data) => {
-        this.assets = Object.keys(data?.asset_classes ?? {}).map(name => new Asset(name));
+        console.log(data);
+        this.assets = data;
         this.isLoading = false;
       },
       error: (error) => {
@@ -64,16 +63,13 @@ export class AppComponent implements AfterViewInit {
   loadSimulations(): void {
     this.isSimulationLoading = true;
 
-    const portfolios = [new Portfolio(this.assets, this.selectedOption)];
-    const simulationsRequest = new SimulationsRequest(portfolios);
-
-    this.apiService.getSimulations(simulationsRequest, this.selectedOption).subscribe({
+    this.apiService.getSimulations(this.assets, this.selectedOption).subscribe({
       next: (data) => {
-        if (data && data.wealth && data.wealth.total) {
+        if (data.length > 0) {
           this.totalChartComponent.updateChartData([
-            { name: "percentile 5", data: data.wealth.total.percentile5 },
-            { name: "percentile 50", data: data.wealth.total.percentile50 },
-            { name: "percentile 75", data: data.wealth.total.percentile75 }
+            { name: "percentile 5", data: data[0] },
+            { name: "percentile 50", data: data[1] },
+            { name: "percentile 75", data: data[2] }
           ]);
 
           this.isSimulationLoading = false;
