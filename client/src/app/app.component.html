@@ -1,6 +1,6 @@
 <!-- Main -->
 <div class="container">
-    <!-- Scenario Space Select -->
+    <!-- Scenario Space -->
     <div class="container-header row align-items-center">
         <div class="col-auto">
             <label for="options" class="col-form-label"><b>Scenario Spaces:</b></label>
@@ -32,7 +32,7 @@
                 <app-asset-class [assets]="assets"></app-asset-class>
             </div>
 
-            <!-- Contribution Request -->
+            <!-- Contributions -->
             <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="contributions-tab">
                 <app-contribution-request [contributionRequests]="contributionRequests"></app-contribution-request>
             </div>
@@ -52,17 +52,5 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div #chartModal class="modal fade" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Total percentile chart</h1>
-                <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
-            </div>
-            <div class="modal-body">
-                <app-total-chart #totalChart></app-total-chart>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- Chart modal -->
+<app-total-chart #totalChart></app-total-chart>

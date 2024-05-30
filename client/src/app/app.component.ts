@@ -1,10 +1,9 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AssetClassComponent } from './asset-class/asset-class.component';
 import { ApiService } from './core/services/api.service';
 import { TotalChartComponent } from "./total-chart/total-chart.component";
-import { Modal } from 'bootstrap';
 import { Asset } from './core/models/asset';
 import { ContributionRequest } from './core/models/contributionRequest';
 import { ContributionRequestComponent } from "./contribution-request/contribution-request.component";
@@ -19,13 +18,10 @@ import { SpinnerComponent } from "./shared/spinner/spinner.component";
 })
 export class AppComponent implements AfterViewInit {
   title = 'simulation';
+
+  // Loading
   isLoading: boolean = true;
   isSimulationLoading: boolean = false;
-
-  // Total chart
-  @ViewChild('chartModal') private chartModal!: ElementRef;
-  @ViewChild(TotalChartComponent) private totalChartComponent!: TotalChartComponent;
-  modalInstance!: Modal;
 
   // Scenario spaces
   options = [
@@ -39,6 +35,7 @@ export class AppComponent implements AfterViewInit {
 
   // Contributions
   contributionRequests: ContributionRequest[] = [];
+  @ViewChild(TotalChartComponent) private totalChartComponent!: TotalChartComponent;
 
   constructor(private apiService: ApiService, private cdr: ChangeDetectorRef) { }
 
@@ -48,7 +45,6 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.modalInstance = new Modal(this.chartModal.nativeElement, { keyboard: false });
     this.cdr.detectChanges();
   }
 
@@ -57,14 +53,9 @@ export class AppComponent implements AfterViewInit {
     this.isLoading = true;
     this.apiService.getSummary(this.selectedOption).subscribe({
       next: (data) => {
-        // Assets
         this.assets = data;
-
-        // Contribution Requests
         this.contributionRequests = [];
         this.contributionRequests.push(new ContributionRequest());
-
-        // Loading
         this.isLoading = false;
       },
       error: (error) => {
@@ -77,7 +68,6 @@ export class AppComponent implements AfterViewInit {
   // Simulation
   loadSimulations(): void {
     this.isSimulationLoading = true;
-
     this.apiService.getSimulations(this.selectedOption, this.assets, this.contributionRequests).subscribe({
       next: (data) => {
         if (data !== null) {
@@ -86,22 +76,11 @@ export class AppComponent implements AfterViewInit {
             { name: "percentile 50", data: data["percentile50"] },
             { name: "percentile 75", data: data["percentile75"] }
           ]);
-
           this.isSimulationLoading = false;
-          this.openModal();
+          this.totalChartComponent.openModal();
         }
       },
       error: (error) => console.error('Failed to fetch data:', error)
     });
-  }
-
-  // Modal
-  openModal(): void {
-    this.modalInstance.show();
-    this.cdr.detectChanges();
-  }
-
-  closeModal(): void {
-    this.modalInstance.hide();
   }
 }

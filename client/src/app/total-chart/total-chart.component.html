@@ -1,2 +1,16 @@
-<apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
-    [tooltip]="chartOptions.tooltip" [dataLabels]="chartOptions.dataLabels!"></apx-chart>
+<div #chartModal class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Total percentile chart</h1>
+                <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+            </div>
+            <div class="modal-body">
+
+                <!-- Chart -->
+                <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
+                    [tooltip]="chartOptions.tooltip" [dataLabels]="chartOptions.dataLabels!"></apx-chart>
+            </div>
+        </div>
+    </div>
+</div>
