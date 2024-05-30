@@ -1,0 +1,47 @@
+.new-button {
+    background-color: #6695db !important;
+    color: white;
+}
+
+.new-button::after {
+    height: 0px;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: white;
+}
+
+.card-container>.col-3 {
+    padding: 10px
+}
+
+.card-outline-success {
+    color: #198754;
+    border-color: #198754;
+}
+
+.card-outline-success:hover {
+    cursor: pointer;
+    background-color: #198754;
+    border-radius: 5px;
+    color: white;
+}
+
+.card-add {
+    display: flex;
+    height: 130px;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-add>.fa {
+    font-size: 40px;
+}
+
+.col-4 {
+    padding: 10px;
+}
+
+.row {
+    padding: 5px;
+}

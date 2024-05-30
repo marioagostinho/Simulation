@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using MediatR;
 using Newtonsoft.Json;
+using Simulation.Application.Dtos;
 using Entities = Simulation.Domain.Entities;
 
 namespace Simulation.Application.Features.Simulation.Queries.GetSimulationsQuery
 {
-    public class GetSimulationsQueryHandler : IRequestHandler<GetSimulationsQuery, double[][]>
+    public class GetSimulationsQueryHandler : IRequestHandler<GetSimulationsQuery, SimulationPercentileDto>
     {
         private readonly HttpClient _httpClient;
         private readonly IMapper _mapper;
@@ -16,14 +17,15 @@ namespace Simulation.Application.Features.Simulation.Queries.GetSimulationsQuery
             _mapper = mapper;
         }
 
-        public async Task<double[][]> Handle(GetSimulationsQuery request, CancellationToken cancellationToken)
+        public async Task<SimulationPercentileDto> Handle(GetSimulationsQuery request, CancellationToken cancellationToken)
         {
             var url = $"simulations?scenarioSpace={request.ScenarioSpace}";
 
             var assets = _mapper.Map<List<Entities.Asset>>(request.Assets);
+            var contributionRequest = _mapper.Map<List<Entities.ContributionRequest>>(request.ContributionRequest);
 
             var portfolio = new Entities.Portfolio(assets, request.ScenarioSpace);
-            var simulation = new Entities.Simulation(new List<Entities.Portfolio>() { portfolio });
+            var simulation = new Entities.Simulation(new List<Entities.Portfolio>() { portfolio }, contributionRequest);
 
             var jsonContent = JsonConvert.SerializeObject(simulation);
             var httpContent = new StringContent(jsonContent, System.Text.Encoding.UTF8, "application/json");
@@ -40,13 +42,13 @@ namespace Simulation.Application.Features.Simulation.Queries.GetSimulationsQuery
             var simulations = JsonConvert.DeserializeObject<Entities.SimulationsResponse>(content);
 
             if (simulations == null || simulations.Wealth == null || simulations.Wealth.Total == null)
-                return new double[0][];
+                return new SimulationPercentileDto();
 
-            return [
+            return new SimulationPercentileDto(
                 simulations.Wealth.Total.Percentile5.ToArray(),
                 simulations.Wealth.Total.Percentile50.ToArray(),
                 simulations.Wealth.Total.Percentile75.ToArray()
-            ];
+            );
         }
     }
 }

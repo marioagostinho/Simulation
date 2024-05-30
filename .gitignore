@@ -183,11 +183,6 @@ Simulation/.yarn/*
 !Simulation/.yarn/build-state.yml
 !Simulation/.yarn/install-state.gz
 
-# Docker files
-docker-compose.dcproj
-docker-compose.override.yml
-Dockerfile
-
 # Build directories
 Simulation/**/bin/
 Simulation/**/obj/

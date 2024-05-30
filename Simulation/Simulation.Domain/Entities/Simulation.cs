@@ -23,7 +23,7 @@ namespace Simulation.Domain.Entities
         [JsonProperty("goals")]
         public List<int> Goals { get; set; }
         [JsonProperty("contributions")]
-        public List<int> Contributions { get; set; }
+        public List<ContributionRequest> Contributions { get; set; }
         [JsonProperty("percentiles")]
         public List<int> Percentiles { get; set; }
 
@@ -32,7 +32,7 @@ namespace Simulation.Domain.Entities
             
         }
 
-        public Simulation(List<Portfolio> portfolios)
+        public Simulation(List<Portfolio> portfolios, List<ContributionRequest> contributionRequest)
         {
             Portfolios = portfolios;
             GoalPercentiles = new List<int> { 5, 10 };
@@ -43,7 +43,7 @@ namespace Simulation.Domain.Entities
             TotalQuarters = 156;
             ActiveQuarters = 185;
             Goals = new List<int>();
-            Contributions = new List<int>();
+            Contributions = contributionRequest;
             Percentiles = new List<int> { 5, 50, 75 };
         }
     }

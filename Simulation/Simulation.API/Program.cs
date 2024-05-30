@@ -27,7 +27,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.WebHost.UseUrls("http://*:80");
+builder.WebHost.UseUrls("http://*:80");
 
 var app = builder.Build();
 

@@ -6,13 +6,16 @@ import { ApiService } from './core/services/api.service';
 import { TotalChartComponent } from "./total-chart/total-chart.component";
 import { Modal } from 'bootstrap';
 import { Asset } from './core/models/asset';
+import { ContributionRequest } from './core/models/contributionRequest';
+import { ContributionRequestComponent } from "./contribution-request/contribution-request.component";
+import { SpinnerComponent } from "./shared/spinner/spinner.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  imports: [CommonModule, FormsModule, AssetClassComponent, TotalChartComponent]
+  imports: [CommonModule, FormsModule, AssetClassComponent, TotalChartComponent, ContributionRequestComponent, SpinnerComponent]
 })
 export class AppComponent implements AfterViewInit {
   title = 'simulation';
@@ -34,8 +37,12 @@ export class AppComponent implements AfterViewInit {
   selectedOption: string = this.options[0].value;
   assets: Asset[] = [];
 
+  // Contributions
+  contributionRequests: ContributionRequest[] = [];
+
   constructor(private apiService: ApiService, private cdr: ChangeDetectorRef) { }
 
+  // Init
   ngOnInit(): void {
     this.loadScenarioSpaceSummary();
   }
@@ -45,12 +52,19 @@ export class AppComponent implements AfterViewInit {
     this.cdr.detectChanges();
   }
 
+  // Summary
   loadScenarioSpaceSummary(): void {
     this.isLoading = true;
     this.apiService.getSummary(this.selectedOption).subscribe({
       next: (data) => {
-        console.log(data);
+        // Assets
         this.assets = data;
+
+        // Contribution Requests
+        this.contributionRequests = [];
+        this.contributionRequests.push(new ContributionRequest());
+
+        // Loading
         this.isLoading = false;
       },
       error: (error) => {
@@ -60,16 +74,17 @@ export class AppComponent implements AfterViewInit {
     });
   }
 
+  // Simulation
   loadSimulations(): void {
     this.isSimulationLoading = true;
 
-    this.apiService.getSimulations(this.assets, this.selectedOption).subscribe({
+    this.apiService.getSimulations(this.selectedOption, this.assets, this.contributionRequests).subscribe({
       next: (data) => {
-        if (data.length > 0) {
+        if (data !== null) {
           this.totalChartComponent.updateChartData([
-            { name: "percentile 5", data: data[0] },
-            { name: "percentile 50", data: data[1] },
-            { name: "percentile 75", data: data[2] }
+            { name: "percentile 5", data: data["percentile5"] },
+            { name: "percentile 50", data: data["percentile50"] },
+            { name: "percentile 75", data: data["percentile75"] }
           ]);
 
           this.isSimulationLoading = false;

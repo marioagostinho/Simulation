@@ -1,5 +1,6 @@
 <!-- Main -->
 <div class="container">
+    <!-- Scenario Space Select -->
     <div class="container-header row align-items-center">
         <div class="col-auto">
             <label for="options" class="col-form-label"><b>Scenario Spaces:</b></label>
@@ -13,16 +14,37 @@
             </select>
         </div>
     </div>
+
     <div class="container-body">
-        <app-asset-class [assets]="assets" [hidden]="isLoading"></app-asset-class>
-        <div class="d-flex justify-content-center" style="width: 100%; align-items: center;" *ngIf="isLoading">
-            <div class="spinner-border" role="status" style="align-items: center;">
-                <span class="visually-hidden">Loading...</span>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="assets-tab" data-bs-toggle="tab" data-bs-target="#tab1"
+                    type="button" role="tab" aria-controls="tab1" aria-selected="true">Assets</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contributions-tab" data-bs-toggle="tab" data-bs-target="#tab2"
+                    type="button" role="tab" aria-controls="tab2" aria-selected="false">Contributions</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent" [hidden]="isLoading">
+            <!-- Assets -->
+            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="assets-tab">
+                <app-asset-class [assets]="assets"></app-asset-class>
+            </div>
+
+            <!-- Contribution Request -->
+            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="contributions-tab">
+                <app-contribution-request [contributionRequests]="contributionRequests"></app-contribution-request>
             </div>
         </div>
+
+        <!-- Spinner -->
+        <app-spinner style="height: 100%;" [isLoading]="isLoading" *ngIf="isLoading"></app-spinner>
     </div>
+
+    <!-- Button -->
     <div class="container-footer">
-        <button type="button" class="btn btn-primary" (click)="loadSimulations()"
+        <button type="button" class="btn btn-success" (click)="loadSimulations()"
             [hidden]="isLoading || assets.length == 0" [disabled]="isSimulationLoading">
             <span class="spinner-border spinner-border-sm" aria-hidden="true" [hidden]="!isSimulationLoading"></span>
             <span role="status"> Simulate</span>

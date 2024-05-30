@@ -2,12 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { Asset } from '../models/asset';
+import { ContributionRequest } from '../models/contributionRequest';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
   private baseUrl = 'http://localhost:5000/api/v1/';
+  //private baseUrl = 'https://localhost:7126/api/v1/';
 
   constructor(private http: HttpClient) { }
 
@@ -27,17 +29,16 @@ export class ApiService {
   }
 
   // Contact with simulations endpoint
-  getSimulations(assets: Asset[], scenarioSpace: string): Observable<any> {
+  getSimulations(scenarioSpace: string, assets: Asset[], contributionRequest: ContributionRequest[]): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
 
     const body = {
+      "scenarioSpace": scenarioSpace,
       "assets": assets,
-      "scenarioSpace": scenarioSpace
+      "contributionRequest": contributionRequest
     };
-
-    console.log(body);
 
     return this.http.post(`${this.baseUrl}Simulation/GetSimulations`, body, { headers: headers })
       .pipe(

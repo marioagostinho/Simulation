@@ -1,30 +1,54 @@
 .container {
     display: flex;
-    flex-flow: column;
+    flex-direction: column;
     height: 100vh;
-    flex: 1 1 auto;
 }
 
 .container-header {
-    height: 100px;
-    margin-right: calc(-.5 * var(--bs-gutter-x));
-    margin-left: calc(-.5 * var(--bs-gutter-x));
+    height: 150px;
 }
 
 .container-body {
     flex: 1;
-    overflow-x: hidden;
-    overflow-y: auto;
     display: flex;
-    margin-right: calc(-.5 * var(--bs-gutter-x));
-    margin-left: calc(-.5 * var(--bs-gutter-x));
+    flex-direction: column;
+}
+
+.tab-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: 900px;
+}
+
+.tab-pane {
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .container-footer {
-    height: 150px;
-    margin-right: calc(-.5 * var(--bs-gutter-x));
-    margin-left: calc(-.5 * var(--bs-gutter-x));
+    height: 20%;
+    min-height: 100px;
     display: flex;
     align-items: center;
-    justify-content: right;
+    justify-content: flex-end;
+}
+
+.d-flex {
+    justify-content: center;
+    align-items: center;
+}
+
+@media only screen and (max-height: 1100px) {
+    .tab-content {
+        max-height: 700px;
+    }
+}
+
+@media only screen and (max-height: 900px) {
+    .tab-content {
+        max-height: 500px;
+    }
 }

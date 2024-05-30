@@ -1,0 +1,87 @@
+<div class="container mt-5">
+    <!-- Add Contribution -->
+    <button class="btn btn-outline-success" (click)="addContributionRequest()"><i class="fa fa-plus"></i> Add</button>
+
+    <br />
+    <br>
+
+    <!-- Contributions -->
+    <div class="accordion" id="accordion-contribution">
+        <div class="accordion-item" *ngFor="let request of contributionRequests.slice().reverse(); let i = index">
+            <h2 class="accordion-header" [attr.id]="'heading-' + i">
+                <button class="accordion-button" type="button" [attr.aria-expanded]="i === 0"
+                    [attr.data-bs-toggle]="'collapse'" [attr.data-bs-target]="'#collapse-' + i"
+                    [attr.aria-controls]="'collapse-' + i">
+                    Contribution #{{contributionRequests.length - i}}
+                </button>
+            </h2>
+
+            <!-- Values -->
+            <div [id]="'collapse-' + i" class="accordion-collapse collapse" [class.show]="i === 0"
+                data-bs-parent="#accordion-contribution">
+                <div class="accordion-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" [(ngModel)]="request.name">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Portfolio</label>
+                            <input type="number" class="form-control" [(ngModel)]="request.portfolio"
+                                (change)="validatePortfolio(request)">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" [(ngModel)]="request.nominal">
+                        <label class="form-check-label">Nominal</label>
+                    </div>
+
+                    <br>
+                    <label class="form-label">Values</label>
+                    <hr>
+
+                    <!-- Values -->
+                    <div class="row card-container">
+
+                        <!-- Add value -->
+                        <div class="col-3">
+                            <div class="card card-outline-success">
+                                <div class="card-body card-add" (click)="addValue(request)">
+                                    <i class="fa fa-plus"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Values -->
+                        <div class="col-3" *ngFor="let value of request.values | keyValuePairs: true">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-3">
+                                            Key:
+                                        </div>
+                                        <div class="col-9">
+                                            <input type="number" class="form-control" [(ngModel)]="value.key" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-3">
+                                            Value:
+                                        </div>
+                                        <div class="col-9">
+                                            <input type="number" class="form-control" [(ngModel)]="value.value">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
